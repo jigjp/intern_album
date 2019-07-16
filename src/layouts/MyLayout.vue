@@ -6,7 +6,7 @@ q-layout(view="hHh lpR fFf")
       q-btn.q-ml-xs(flat, no-caps, no-wrap, v-if="$q.screen.gt.xs")
         q-icon(name="fab fa-youtube", color="red", size="28px")
         q-toolbar-title.text-weight-bold(shrink)
-          | YouTub
+          | Jig.jp インターンアルバム
       q-space
       .YL__toolbar-input-container.row.no-wrap
         q-input.bg-white.col(dense, outlined, square, v-model="search", placeholder="Search")
