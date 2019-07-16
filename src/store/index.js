@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import dates from './dates'
+
 // import example from './module-example'
 
 Vue.use(Vuex)
@@ -14,6 +16,7 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       // example
+      dates
     },
 
     // enable strict mode (adds overhead!)
