@@ -51,7 +51,10 @@ module.exports = function (ctx) {
         "QBadge",
         "QAvatar",
         "QSeparator",
-        "QScrollArea"
+        "QScrollArea",
+        "QCard",
+        "QImg",
+        "QCardActions"
       ],
 
       directives: [
