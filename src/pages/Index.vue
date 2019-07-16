@@ -1,7 +1,7 @@
 <template lang="pug">
 .container
   .title.text-weight-bold.q-ma-md
-    | 2019/7/24
+    | {{ current.text }}
   .q-pa-md.row.items-start
     q-card.my-card(v-for="pic in pictures")
       q-img(:src="pic.url", transition="rotate")
@@ -11,9 +11,16 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+
+const {
+  mapState: mapSatateOfDates
+} = createNamespacedHelpers('dates')
+
 export default {
   name: 'PageIndex',
   computed: {
+    ...mapSatateOfDates(['current']),
     pictures: {
       get () {
         return this.$store.state.pictures.all
