@@ -37,34 +37,11 @@ q-layout(view="hHh lpR fFf")
           q-item-section
             q-item-label {{ link.text }}
         q-separator.q-my-md
-        q-item(v-for="link in links2", :key="link.text", v-ripple, clickable)
+        q-item(v-for="link in dates", :key="link.text", v-ripple, clickable)
           q-item-section(avatar)
-            q-icon(color="grey", :name="link.icon")
+            q-icon(color="grey", name="folder")
           q-item-section
             q-item-label {{ link.text }}
-        q-separator.q-mt-md.q-mb-xs
-        q-item-label.text-weight-bold.text-uppercase(header)
-          | More from Youtube
-        q-item(v-for="link in links3", :key="link.text", v-ripple, clickable)
-          q-item-section(avatar)
-            q-icon(color="grey", :name="link.icon")
-          q-item-section
-            q-item-label {{ link.text }}
-        q-separator.q-my-md
-        q-item(v-for="link in links4", :key="link.text", v-ripple, clickable)
-          q-item-section(avatar)
-            q-icon(color="grey", :name="link.icon")
-          q-item-section
-            q-item-label {{ link.text }}
-        q-separator.q-mt-md.q-mb-lg
-        .q-px-md.text-grey-9
-          .row.items-center.q-gutter-x-sm.q-gutter-y-xs
-            a.YL__drawer-footer-link(v-for="button in buttons1", :key="button.text", href="javascript:void(0)")
-              | {{ button.text }}
-        .q-py-md.q-px-md.text-grey-9
-          .row.items-center.q-gutter-x-sm.q-gutter-y-xs
-            a.YL__drawer-footer-link(v-for="button in buttons2", :key="button.text", href="javascript:void(0)")
-              | {{ button.text }}
   q-page-container
     router-view
 </template>
@@ -80,40 +57,14 @@ export default {
         { icon: 'home', text: 'Homehoge' },
         { icon: 'whatshot', text: 'Trending' },
         { icon: 'subscriptions', text: 'Subscriptions' }
-      ],
-      links2: [
-        { icon: 'folder', text: 'Library' },
-        { icon: 'restore', text: 'History' },
-        { icon: 'watch_later', text: 'Watch later' },
-        { icon: 'thumb_up_alt', text: 'Liked videos' }
-      ],
-      links3: [
-        { icon: 'fab fa-youtube', text: 'YouTube Premium' },
-        { icon: 'local_movies', text: 'Movies & Shows' },
-        { icon: 'videogame_asset', text: 'Gaming' },
-        { icon: 'live_tv', text: 'Live' }
-      ],
-      links4: [
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'flag', text: 'Report history' },
-        { icon: 'help', text: 'Help' },
-        { icon: 'feedback', text: 'Send feedback' }
-      ],
-      buttons1: [
-        { text: 'About' },
-        { text: 'Press' },
-        { text: 'Copyright' },
-        { text: 'Contact us' },
-        { text: 'Creators' },
-        { text: 'Advertise' },
-        { text: 'Developers' }
-      ],
-      buttons2: [
-        { text: 'Terms' },
-        { text: 'Privacy' },
-        { text: 'Policy & Safety' },
-        { text: 'Test new features' }
       ]
+    }
+  },
+  computed: {
+    dates: {
+      get () {
+        return this.$store.state.dates.all
+      }
     }
   },
   mounted () {
