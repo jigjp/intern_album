@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import dates from './dates'
+import folders from './folders'
 import pictures from './pictures'
 
 // import example from './module-example'
@@ -17,7 +17,7 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       // example
-      dates,
+      folders,
       pictures
     },
 

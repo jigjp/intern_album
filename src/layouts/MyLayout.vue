@@ -37,7 +37,7 @@ q-layout(view="hHh lpR fFf")
           q-item-section
             q-item-label {{ link.text }}
         q-separator.q-my-md
-        q-item(v-for="link in dates", :key="link.text", v-ripple, clickable, @click="clickLink(link)")
+        q-item(v-for="link in folders", :key="link.text", v-ripple, clickable, @click="clickLink(link)")
           q-item-section(avatar)
             q-icon(color="grey", name="folder")
           q-item-section
@@ -50,8 +50,9 @@ q-layout(view="hHh lpR fFf")
 import { createNamespacedHelpers } from 'vuex'
 
 const {
-  mapMutations: mapMutationsOfDates
-} = createNamespacedHelpers('dates')
+  mapMutations: mapMutationsOfFolders,
+  mapActions: mapActionsOfFolders
+} = createNamespacedHelpers('folders')
 
 export default {
   name: 'MyLayout',
@@ -67,19 +68,23 @@ export default {
     }
   },
   computed: {
-    dates: {
+    folders: {
       get () {
-        return this.$store.state.dates.all
+        return this.$store.state.folders.all
       }
     }
   },
   methods: {
-    ...mapMutationsOfDates([
+    ...mapMutationsOfFolders([
       'setCurrent'
     ]),
+    ...mapActionsOfFolders(['getFolders']),
     clickLink (link) {
       this.setCurrent(link)
     }
+  },
+  mounted () {
+    this.getFolders()
   }
 }
 </script>

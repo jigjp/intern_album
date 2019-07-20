@@ -16,13 +16,13 @@
 import { createNamespacedHelpers } from 'vuex'
 
 const {
-  mapState: mapSatateOfDates
-} = createNamespacedHelpers('dates')
+  mapState: mapSatateOfFolders
+} = createNamespacedHelpers('folders')
 
 export default {
   name: 'PageIndex',
   computed: {
-    ...mapSatateOfDates(['current']),
+    ...mapSatateOfFolders(['current']),
     pictures: {
       get () {
         return this.$store.state.pictures.all
