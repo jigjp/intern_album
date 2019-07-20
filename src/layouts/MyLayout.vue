@@ -13,16 +13,8 @@ q-layout(view="hHh lpR fFf")
         q-btn.YL__toolbar-input-btn(color="grey-3", text-color="grey-8", icon="search", unelevated)
       q-space
       .q-gutter-sm.row.items-center.no-wrap
-        q-btn(round, dense, flat, color="grey-8", icon="video_call", v-if="$q.screen.gt.sm")
-          q-tooltip Create a video or post
-        q-btn(round, dense, flat, color="grey-8", icon="apps", v-if="$q.screen.gt.sm")
-          q-tooltip Apps
-        q-btn(round, dense, flat, color="grey-8", icon="message", v-if="$q.screen.gt.sm")
-          q-tooltip Messages
-        q-btn(round, dense, flat, color="grey-8", icon="notifications")
-          q-badge(color="red", text-color="white", floating)
-            | 2
-          q-tooltip Notifications
+        q-btn(round, dense, flat, color="grey-8", icon="add_a_photo", @click="uploadDialogOpen = true")
+          q-tooltip 写真をアップロード
         q-btn(round="", flat="")
           q-avatar(size="26px")
             img(src="https://cdn.quasar.dev/img/boy-avatar.png")
@@ -42,8 +34,30 @@ q-layout(view="hHh lpR fFf")
             q-icon(color="grey", name="folder")
           q-item-section
             q-item-label {{ link.text }}
+
+  q-dialog(v-model="uploadDialogOpen", full-width, full-height)
+    q-card
+      q-card-section.row.items-center
+        .text-h6 写真アップロード
+        q-space
+        q-btn(icon="close", flat, round, dense, v-close-popup)
+      q-card-section
+        q-input(filled, v-model="folder", mask="date", :rules="['date']", label="アップロード日")
+          template(v-slot:append)
+            q-icon(name="event", class="cursor-pointer")
+              q-popup-proxy(ref="qDateProxy", transition-show="scale", transition-hide="scake")
+                q-date(v-model="folder", @input="() => $refs.qDateProxy.hide()"  )
+      q-card-section
+        .q-pa-sm
+          q-uploader.my-uploader(url="http://localhost:4444/upload",
+                    label="写真を選択",
+                    multiple,
+                    batch)
+      </template>
+
   q-page-container
     router-view
+
 </template>
 
 <script>
@@ -63,7 +77,9 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
+      uploadDialogOpen: false,
       search: '',
+      folder: '2019/07/22',
       links1: [
         { icon: 'home', text: 'Homehoge' },
         { icon: 'whatshot', text: 'Trending' },
@@ -75,6 +91,11 @@ export default {
     folders: {
       get () {
         return this.$store.state.folders.all
+      }
+    },
+    foldersForUploader: {
+      get () {
+        return this.folders.map(f => f.text)
       }
     }
   },
@@ -92,11 +113,21 @@ export default {
   },
   mounted () {
     this.getFolders()
+
+    this.folder = new Date().toLocaleDateString()
   }
 }
 </script>
 
 <style lang="stylus">
+sp()
+  @media screen and (max-width $breakpoint-xs-max)
+    {block}
+
+pc()
+  @media screen and (min-width $breakpoint-xs-max)
+    {block}
+
 .YL
   &__toolbar-input-container
     min-width 100px
@@ -115,4 +146,11 @@ export default {
     font-size .75rem
     &:hover
       color #000
+
+.upload-dialog
+  background-color #ffffff
+
+.my-uploader
+  width 100%
+  min-height 60vh
 </style>
