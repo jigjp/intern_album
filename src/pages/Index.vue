@@ -4,7 +4,9 @@
     | {{ current.text }}
   .q-pa-md.row.items-start
     q-card.my-card(v-for="pic in pictures")
-      q-img(:src="pic.url", transition="rotate")
+      q-img.picture(:src="pic.url",
+                    :ratio="1",
+                    transition="rotate")
       //- q-card-actions(align="around")
       //-   q-btn(flat, rround, color="red", icon="favorite")
       //-   q-btn(flat, rround, color="teal", icon="bookmark")
@@ -44,10 +46,10 @@ pc()
 
 .my-card
   margin 8px
+
+.picture
   +sp()
     width calc(50% - 16px)
-
   +pc()
-    width 300px
-    margin 48px
+    width 290px
 </style>

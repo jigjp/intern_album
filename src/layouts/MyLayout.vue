@@ -78,8 +78,6 @@ export default {
       'setCurrent'
     ]),
     clickLink (link) {
-      console.log(link)
-      this.leftDrawerOpen = false
       this.setCurrent(link)
     }
   }
