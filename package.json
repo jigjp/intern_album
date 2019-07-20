@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "aws-sdk": "^2.496.0",
     "axios": "^0.18.1",
     "quasar": "^1.0.0"
   },
