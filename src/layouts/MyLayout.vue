@@ -54,6 +54,10 @@ const {
   mapActions: mapActionsOfFolders
 } = createNamespacedHelpers('folders')
 
+const {
+  mapActions: mapActionsOfPictures
+} = createNamespacedHelpers('pictures')
+
 export default {
   name: 'MyLayout',
   data () {
@@ -79,8 +83,10 @@ export default {
       'setCurrent'
     ]),
     ...mapActionsOfFolders(['getFolders']),
+    ...mapActionsOfPictures(['getPictures']),
     clickLink (link) {
       this.setCurrent(link)
+      this.getPictures(link.value)
     }
   },
   mounted () {
