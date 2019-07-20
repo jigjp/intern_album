@@ -85,6 +85,7 @@ export default {
     ...mapActionsOfFolders(['getFolders']),
     ...mapActionsOfPictures(['getPictures']),
     clickLink (link) {
+      this.leftDrawerOpen = false
       this.setCurrent(link)
       this.getPictures(link.value)
     }

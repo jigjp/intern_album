@@ -47,9 +47,12 @@ pc()
 .my-card
   margin 8px
 
-.picture
   +sp()
     width calc(50% - 16px)
+
+.picture
+  +sp()
+    width 100%
   +pc()
     width 290px
 </style>
