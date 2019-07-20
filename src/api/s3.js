@@ -4,7 +4,8 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
   IdentityPoolId: 'ap-northeast-1:090f9552-3e8b-4110-b580-6c90f973e437'
 })
 
-const s3 = new AWS.S3({ params: { Bucket: 'intern-album' } })
+const BUCKET_NAME = 'intern-album'
+const s3 = new AWS.S3({ params: { Bucket: BUCKET_NAME } })
 export const S3Client = {
   listFolder () {
     return new Promise((resolve, reject) => {
@@ -21,6 +22,30 @@ export const S3Client = {
         })
 
         resolve(prefixes)
+      })
+    })
+  },
+
+  listPictures (folder) {
+    return new Promise((resolve, reject) => {
+      s3.listObjects({ Prefix: folder }, function (err, data) {
+        if (err) {
+          reject(err)
+        }
+
+        const href = this.request.httpRequest.endpoint.href
+        const bucketUrl = href + BUCKET_NAME + '/'
+
+        const photos = data.Contents
+          .filter(content => !content.Key.endsWith('/'))
+          .map(photo => {
+            const photoKey = photo.Key
+            const url = bucketUrl + encodeURIComponent(photoKey)
+
+            return { url }
+          })
+
+        return resolve(photos)
       })
     })
   }
