@@ -49,11 +49,14 @@ q-layout(view="hHh lpR fFf")
                 q-date(v-model="folder", @input="() => $refs.qDateProxy.hide()"  )
       q-card-section
         .q-pa-sm
-          q-uploader.my-uploader(url="http://localhost:4444/upload",
+          q-uploader.my-uploader(
                     label="写真を選択",
                     multiple,
-                    batch)
-      </template>
+                    :hide-upload-btn="true",
+                    @added="fileAdded",
+                    @removed="fileRemoved")
+      q-card-actions(align="center")
+        q-btn(color="primary", label="アップロード", @click="upload", :loading="uploading")
 
   q-page-container
     router-view
@@ -62,6 +65,8 @@ q-layout(view="hHh lpR fFf")
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import { S3Client } from '../api/s3'
+import dateformat from 'dateformat'
 
 const {
   mapMutations: mapMutationsOfFolders,
@@ -80,6 +85,8 @@ export default {
       uploadDialogOpen: false,
       search: '',
       folder: '2019/07/22',
+      selectedFiles: [],
+      uploading: false,
       links1: [
         { icon: 'home', text: 'Homehoge' },
         { icon: 'whatshot', text: 'Trending' },
@@ -109,12 +116,32 @@ export default {
       this.leftDrawerOpen = false
       this.setCurrent(link)
       this.getPictures(link.value)
+    },
+    fileAdded (files) {
+      this.selectedFiles = [...this.selectedFiles, ...files]
+    },
+    fileRemoved (files) {
+      this.selectedFiles = this.selectedFiles.filter(file => !files.includes(file))
+    },
+    upload () {
+      this.uploading = true
+      const _folder = this.folder.replace(/\//g, '')
+      S3Client.uploadPictures(_folder, this.selectedFiles)
+        .then(res => {
+          this.uploadding = false
+          this.uploadDialogOpen = false
+          this.getFolders()
+
+          this.setCurrent({ text: this.folder, value: _folder })
+          this.getPictures(_folder)
+        })
     }
   },
   mounted () {
     this.getFolders()
 
-    this.folder = new Date().toLocaleDateString()
+    const now = new Date()
+    this.folder = dateformat(now, 'yyyy/mm/dd')
   }
 }
 </script>
@@ -152,5 +179,5 @@ pc()
 
 .my-uploader
   width 100%
-  min-height 60vh
+  min-height 55vh
 </style>
