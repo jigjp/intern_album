@@ -4,28 +4,48 @@
     | {{ current.text }}
   .q-pa-lg
     masonry.masonry(:cols="{default: 4, 700: 2}", :gutter="30")
-      q-card.my-card(v-for="pic in pictures")
-        img.picture(
-          :src="pic.url",
-                      :ratio="1",
-                      transition="rotate")
+      q-card.my-card(clickable, v-for="pic in pictures", @click="cardClick(pic)")
+        img.picture(:src="pic.url")
+
+  image-card-dialog
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import { Picker } from 'emoji-mart-vue'
+import ImageCardDialog from '../components/ImageCardDialog'
 
 const {
   mapState: mapSatateOfFolders
 } = createNamespacedHelpers('folders')
 
+const {
+  mapMutations: mapMutationsOfImageCardDialog
+} = createNamespacedHelpers('imageCardDialog')
+
 export default {
   name: 'PageIndex',
+  components: {
+    Picker,
+    ImageCardDialog
+  },
   computed: {
     ...mapSatateOfFolders(['current']),
     pictures: {
       get () {
         return this.$store.state.pictures.all
       }
+    }
+  },
+  methods: {
+    ...mapMutationsOfImageCardDialog(['toggleDialogOpen', 'setPicture']),
+    addEmoji (ev) {
+      console.log(ev)
+    },
+
+    cardClick (pic) {
+      this.setPicture(pic)
+      this.toggleDialogOpen()
     }
   }
 }

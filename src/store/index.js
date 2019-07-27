@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import folders from './folders'
 import pictures from './pictures'
+import imageCardDialog from './image-card-dialog'
 
 // import example from './module-example'
 
@@ -18,7 +19,8 @@ export default function (/* { ssrContext } */) {
     modules: {
       // example
       folders,
-      pictures
+      pictures,
+      imageCardDialog
     },
 
     // enable strict mode (adds overhead!)
