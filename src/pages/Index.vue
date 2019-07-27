@@ -2,7 +2,6 @@
 .container
   .title.text-weight-bold.q-ma-md
     | {{ current.text }}
-  //.q-pa-md.row.items-start.justify-start
   .q-pa-lg
     masonry.masonry(:cols="{default: 4, 700: 2}", :gutter="30")
       .my-card(v-for="pic in pictures")
@@ -10,9 +9,6 @@
           :src="pic.url",
                       :ratio="1",
                       transition="rotate")
-      //- q-card-actions(align="around")
-      //-   q-btn(flat, rround, color="red", icon="favorite")
-      //-   q-btn(flat, rround, color="teal", icon="bookmark")
 </template>
 
 <script>
