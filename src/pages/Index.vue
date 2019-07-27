@@ -4,7 +4,7 @@
     | {{ current.text }}
   .q-pa-lg
     masonry.masonry(:cols="{default: 4, 700: 2}", :gutter="30")
-      .my-card(v-for="pic in pictures")
+      q-card.my-card(v-for="pic in pictures")
         img.picture(
           :src="pic.url",
                       :ratio="1",
@@ -44,15 +44,15 @@ pc()
   font-size 24px
 
 .my-card
-  margin 8px
+  margin 30px 10px
 
   +sp()
     width 40vw
 
-.picture
-  +sp()
-    width 100%
   +pc()
     width 320px
+
+.picture
+  width 100%
 
 </style>
