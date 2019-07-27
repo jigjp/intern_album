@@ -53,7 +53,7 @@ export const S3Client = {
   uploadPictures (folder, files) {
     const promises = files.map(file => {
       return new Promise((resolve, reject) => {
-        const photoKey = encodeURIComponent(folder) + '/' + file.name
+        const photoKey = encodeURIComponent(folder) + '/' + new Date().getTime() + '_' + file.name
 
         const param = {
           Key: photoKey,
