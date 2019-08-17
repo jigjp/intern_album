@@ -22,5 +22,16 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
+  // ログイン処理
+  Router.beforeEach((to, from, next) => {
+    const loginUser = localStorage.getItem('user')
+    // isPublic でない場合(=認証が必要な場合)、かつ、ログインしていない場合
+    if (to.matched.some(record => !record.meta.is_public) && !loginUser) {
+      next({ path: '/login', query: { redirect: to.fullPath } })
+    } else {
+      next()
+    }
+  })
+
   return Router
 }

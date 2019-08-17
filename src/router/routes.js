@@ -5,7 +5,18 @@ const routes = [
     component: () => import('layouts/MyLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }
-    ]
+    ],
+    meta: { }
+  },
+  {
+    path: '/login',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/AuthPage.vue'), meta: { is_public: true } }
+    ],
+    meta: {
+      is_public: true
+    }
   }
 ]
 
