@@ -62,7 +62,8 @@ module.exports = function (ctx) {
         "QSelect",
         "QPopupProxy",
         "QDate",
-        "QChip"
+        "QChip",
+        "QField"
       ],
 
       directives: [
