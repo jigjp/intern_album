@@ -3,11 +3,11 @@ export function someAction (context) {
 }
 */
 
-import { S3Client } from '../../api/s3'
+import axios from 'axios'
 
 export function getPictures ({ commit }, folder) {
-  S3Client.listPictures(folder)
-    .then(pictures => {
-      commit('setPictures', pictures)
+  axios.get(`/api/pictures?folder=${folder}`, { withCredentials: true })
+    .then(res => {
+      commit('setPictures', res.data.data)
     })
 }

@@ -1,15 +1,15 @@
-import { S3Client } from '../../api/s3'
+import axios from 'axios'
 
 export function getFolders ({ commit }) {
-  S3Client.listFolder()
+  axios.get('/api/folders', { withCredentials: true })
     .then(res => {
-      // { text: 'yyyy/MM/dd', value: yyyyMMdd }
-      // の形にする
-      const folders = res.map(value => {
-        const text = `${value.substr(0, 4)}/${value.substr(4, 2)}/${value.substr(6, 2)}`
-        return { text, value }
+      console.log(res)
+      const folders = res.data.data.map(val => {
+        return {
+          text: val,
+          value: val
+        }
       })
-
       commit('setFolders', folders)
     })
 }

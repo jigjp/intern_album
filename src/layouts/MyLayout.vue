@@ -15,10 +15,10 @@ q-layout(view="hHh lpR fFf")
       .q-gutter-sm.row.items-center.no-wrap
         q-btn(round, dense, flat, color="grey-8", icon="add_a_photo", @click="uploadDialogOpen = true")
           q-tooltip 写真をアップロード
-        q-btn(round="", flat="")
-          q-avatar(size="26px")
-            img(src="https://cdn.quasar.dev/img/boy-avatar.png")
-          q-tooltip Account
+      //-   q-btn(round="", flat="")
+      //-     q-avatar(size="26px")
+      //-       img(src="https://cdn.quasar.dev/img/boy-avatar.png")
+      //-     q-tooltip Account
 
   q-drawer(v-model="leftDrawerOpen", bordered, show-if-above, content-class="bg-grey-2", :width="240")
     q-scroll-area.fit
@@ -50,13 +50,13 @@ q-layout(view="hHh lpR fFf")
       q-card-section
         .q-pa-sm
           q-uploader.my-uploader(
+                    url='/api/pictures',
                     label="写真を選択",
                     multiple,
-                    :hide-upload-btn="true",
-                    @added="fileAdded",
-                    @removed="fileRemoved")
-      q-card-actions(align="center")
-        q-btn(color="primary", label="アップロード", @click="upload", :loading="uploading")
+                    :form-fields="[{ name: 'folder', value: folder }]",
+                    :with-credentials="true",
+                    :hide-upload-btn="false",
+                    :batch="true")
 
   q-page-container
     router-view
@@ -65,7 +65,7 @@ q-layout(view="hHh lpR fFf")
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import { S3Client } from '../api/s3'
+// import { S3Client } from '../api/s3'
 import dateformat from 'dateformat'
 
 const {
@@ -81,7 +81,7 @@ export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: false,
+      leftDrawerOpen: true,
       uploadDialogOpen: false,
       search: '',
       folder: '2019/07/22',
@@ -113,28 +113,9 @@ export default {
     ...mapActionsOfFolders(['getFolders']),
     ...mapActionsOfPictures(['getPictures']),
     clickLink (link) {
-      this.leftDrawerOpen = false
+      this.leftDrawerOpen = true
       this.setCurrent(link)
       this.getPictures(link.value)
-    },
-    fileAdded (files) {
-      this.selectedFiles = [...this.selectedFiles, ...files]
-    },
-    fileRemoved (files) {
-      this.selectedFiles = this.selectedFiles.filter(file => !files.includes(file))
-    },
-    upload () {
-      this.uploading = true
-      const _folder = this.folder.replace(/\//g, '')
-      S3Client.uploadPictures(_folder, this.selectedFiles)
-        .then(res => {
-          this.uploadding = false
-          this.uploadDialogOpen = false
-          this.getFolders()
-
-          this.setCurrent({ text: this.folder, value: _folder })
-          this.getPictures(_folder)
-        })
     }
   },
   mounted () {
