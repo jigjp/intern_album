@@ -106,7 +106,18 @@ module.exports = function (ctx) {
     devServer: {
       // https: true,
       // port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        // proxy all requests starting with /api to jsonplaceholder
+        '/api': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+        },
+        '/media': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+        }
+      }
     },
 
     // animations: 'all', // --- includes all animations
