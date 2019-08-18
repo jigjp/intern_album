@@ -8,7 +8,7 @@ const SUCCESS = 200
 
 export function login ({ commit }, user) {
   localStorage.removeItem('user')
-  return axios.post('http://localhost:4000/api/sessions', { user }, { withCredentials: true })
+  return axios.post('/api/sessions', { user }, { withCredentials: true })
     .then(res => {
       if (res.status !== SUCCESS || res.data.errors) {
         commit('setMessage', res.data.errors.detail)
