@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'
 AWS.config.region = 'ap-northeast-1' // Region
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: 'ap-northeast-1:090f9552-3e8b-4110-b580-6c90f973e437'
+  IdentityPoolId: ''
 })
 
 const BUCKET_NAME = 'intern-album'
