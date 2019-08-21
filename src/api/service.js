@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const backendHost = process.env.BACKEND_HOST
+const backendHost = process.env.API
 
 export function apiGetFolders () {
   return axios.get(backendHost + '/api/folders', { withCredentials: true })
