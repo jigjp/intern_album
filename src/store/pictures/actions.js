@@ -2,12 +2,10 @@
 export function someAction (context) {
 }
 */
-
-import axios from 'axios'
+import { apiGetPictures } from '../../api/service'
 
 export function getPictures ({ commit }, folder) {
-  axios.get(`/api/pictures?folder=${folder}`, { withCredentials: true })
-    .then(res => {
-      commit('setPictures', res.data.data)
-    })
+  return apiGetPictures(folder).then(res => {
+    commit('setPictures', res)
+  })
 }

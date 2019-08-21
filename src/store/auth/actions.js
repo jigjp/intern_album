@@ -1,21 +1,10 @@
-/*
-export function someAction (context) {
-}
-*/
-import axios from 'axios'
-
-const SUCCESS = 200
+import { apiLogin } from '../../api/service.js'
 
 export function login ({ commit }, user) {
-  localStorage.removeItem('user')
-  return axios.post('/api/sessions', { user }, { withCredentials: true })
+  apiLogin(user)
     .then(res => {
-      if (res.status !== SUCCESS || res.data.errors) {
-        commit('setMessage', res.data.errors.detail)
-        return false
+      if (!res) {
+        commit('setMessage', 'ログインに失敗しました')
       }
-
-      localStorage.setItem('user', JSON.stringify(res.data))
-      return true
     })
 }
