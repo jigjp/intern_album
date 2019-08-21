@@ -100,6 +100,9 @@ module.exports = function (ctx) {
           test: /\.pug$/,
           loader: 'pug-plain-loader'
         })
+      },
+      env: {
+        API: JSON.stringify(process.env.MY_API)
       }
     },
 
