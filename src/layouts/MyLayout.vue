@@ -15,10 +15,6 @@ q-layout(view="hHh lpR fFf")
       .q-gutter-sm.row.items-center.no-wrap
         q-btn(round, dense, flat, color="grey-8", icon="add_a_photo", @click="uploadDialogOpen = true")
           q-tooltip 写真をアップロード
-      //-   q-btn(round="", flat="")
-      //-     q-avatar(size="26px")
-      //-       img(src="https://cdn.quasar.dev/img/boy-avatar.png")
-      //-     q-tooltip Account
 
   q-drawer(v-model="leftDrawerOpen", bordered, show-if-above, content-class="bg-grey-2", :width="240")
     q-scroll-area.fit
