@@ -50,7 +50,7 @@ q-layout(view="hHh lpR fFf")
       q-card-section
         .q-pa-sm
           q-uploader.my-uploader(
-                    url='/api/pictures',
+                    :url='imageUploadPath',
                     label="写真を選択",
                     multiple,
                     :form-fields="[{ name: 'folder', value: folder }]",
@@ -91,7 +91,8 @@ export default {
         { icon: 'home', text: 'Homehoge' },
         { icon: 'whatshot', text: 'Trending' },
         { icon: 'subscriptions', text: 'Subscriptions' }
-      ]
+      ],
+      imageUploadPath: process.env.API + '/api/pictures'
     }
   },
   computed: {
