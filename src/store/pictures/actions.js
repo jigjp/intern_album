@@ -8,7 +8,8 @@ export function getPictures ({ commit }, folder) {
   return apiGetPictures(folder).then(res => {
     const pictures = res.map(({ url }) => {
       url = `${process.env.API}${url}`
-      return { url }
+      const thumbnailUrl = url.replace(/media/, 'resize')
+      return { url, thumbnailUrl }
     })
     commit('setPictures', pictures)
   })
