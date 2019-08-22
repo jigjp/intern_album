@@ -4,8 +4,10 @@
     | {{ current.text }}
   .q-pa-lg
     masonry.masonry(:cols="{default: 4, 700: 2}", :gutter="30")
-      q-card.my-card(clickable, v-for="pic in pictures")
-        img.picture(:src="pic.url")
+      q-card.my-card(clickable, v-for="pic in pictures", @click="onClick(pic)")
+        q-img.picture(:src="pic.thumbnailUrl",
+                      spinner-color="primary",
+                      spinner-size="82px")
 
   image-card-dialog
 </template>
@@ -18,6 +20,10 @@ import ImageCardDialog from '../components/ImageCardDialog'
 const {
   mapState: mapSatateOfFolders
 } = createNamespacedHelpers('folders')
+
+const {
+  mapMutations: mapMutationsOfImageCardDialog
+} = createNamespacedHelpers('imageCardDialog')
 
 export default {
   name: 'PageIndex',
@@ -34,6 +40,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutationsOfImageCardDialog(['setPicture', 'setDialogOpen']),
+    onClick (pic) {
+      this.setPicture(pic)
+      this.setDialogOpen(true)
+    }
   }
 }
 </script>
