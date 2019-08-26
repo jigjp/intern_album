@@ -7,7 +7,7 @@ import { apiGetPictures } from '../../api/service'
 export function getPictures ({ commit }, folder) {
   return apiGetPictures(folder).then(res => {
     const pictures = res.map(({ url }) => {
-      url = `${process.env.API}${url}`
+      url = url.startsWith('https') ? url : `${process.env.API}${url}`
       const thumbnailUrl = url.replace(/media/, 'resize')
       return { url, thumbnailUrl }
     })
