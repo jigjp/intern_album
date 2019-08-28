@@ -2,12 +2,16 @@
 .container
   .title.text-weight-bold.q-ma-md
     | {{ current.text }}
-  .q-pa-lg
-    masonry.masonry(:cols="{default: 4, 700: 2}", :gutter="30")
-      q-card.my-card(clickable, v-for="pic in pictures", @click="onClick(pic)")
-        q-img.picture(:src="pic.thumbnailUrl",
-                      spinner-color="primary",
-                      spinner-size="82px")
+
+  picture-list(:pictures="pictures", v-if="pictures && pictures.length > 0")
+
+    //- div(v-masonry transition-duration="0.3s" item-selector=".item")
+    //-   .item(v-masonry-tile class="item" v-for="(pic, index) in pictures")
+    //- masonry.masonry(:cols="{default: 4, 700: 2}", :gutter="30")
+    //-   q-card.my-card(clickable, v-for="pic in pictures", @click="onClick(pic)")
+    //-     q-img.picture(:src="pic.thumbnailUrl",
+    //-                   spinner-color="primary",
+    //-                   spinner-size="82px")
 
   image-card-dialog
 </template>
@@ -16,20 +20,18 @@
 import { createNamespacedHelpers } from 'vuex'
 import { Picker } from 'emoji-mart-vue'
 import ImageCardDialog from '../components/ImageCardDialog'
+import pictureList from '../components/PictureList'
 
 const {
   mapState: mapSatateOfFolders
 } = createNamespacedHelpers('folders')
 
-const {
-  mapMutations: mapMutationsOfImageCardDialog
-} = createNamespacedHelpers('imageCardDialog')
-
 export default {
   name: 'PageIndex',
   components: {
     Picker,
-    ImageCardDialog
+    ImageCardDialog,
+    pictureList
   },
   computed: {
     ...mapSatateOfFolders(['current']),
@@ -37,13 +39,6 @@ export default {
       get () {
         return this.$store.state.pictures.all
       }
-    }
-  },
-  methods: {
-    ...mapMutationsOfImageCardDialog(['setPicture', 'setDialogOpen']),
-    onClick (pic) {
-      this.setPicture(pic)
-      this.setDialogOpen(true)
     }
   }
 }
