@@ -10,7 +10,7 @@ export function getPictures ({ commit }, folder) {
     const pictures = res.map(({ url }) => {
       let thumbnailUrl
       if (url.startsWith('https')) {
-        thumbnailUrl = url.replace(/https:\/\/[^/]*/, `${process.env.API}resize2`)
+        thumbnailUrl = url.replace(/https:\/\/[^/]*/, `${process.env.API}/resize2`)
       } else {
         url = `${process.env.API}${url}`
         thumbnailUrl = url.replace(/media/, 'resize')
