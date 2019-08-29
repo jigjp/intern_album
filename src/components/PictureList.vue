@@ -1,11 +1,12 @@
 <template lang="pug">
 .q-pa-lg
-  .flex
-    .item(class="item" v-for="(pic, index) in pictures", :key="index")
-      img.picture(:src="pic.thumbnailUrl",
-                  loading="lazy",
-                    spinner-color="primary",
-                    spinner-size="82px")
+  q-infinite-scroll.scroll(@load="onLoad", :offset="250")
+    .flex
+      .item(class="item" v-for="(pic, index) in viewPictures", :key="index", @click="onClick(pic)")
+        img.picture(:src="pic.thumbnailUrl",
+                    loading="lazy",
+                      spinner-color="primary",
+                      spinner-size="82px")
 </template>
 
 <script>
@@ -16,18 +17,36 @@ const {
 } = createNamespacedHelpers('imageCardDialog')
 
 export default {
+  data () {
+    return {
+      viewPictures: []
+    }
+  },
   props: ['pictures'],
   methods: {
     ...mapMutationsOfImageCardDialog(['setPicture', 'setDialogOpen']),
     onClick (pic) {
       this.setPicture(pic)
       this.setDialogOpen(true)
+    },
+    onLoad (index, done) {
+      const length = this.pictures.length
+      if (length > index * 10) {
+        this.viewPictures = [...this.viewPictures, ...this.pictures.slice(index * 10, index * 10 + 10)]
+        done()
+      }
     }
+  },
+  mounted () {
+    this.viewPictures = this.pictures.slice(0, 10)
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.scroll
+  height 80vh
+
 sp()
   @media screen and (max-width $breakpoint-xs-max)
     {block}
@@ -43,6 +62,9 @@ pc()
 
   +pc()
     width 320px
+
+.item
+  cursor pointer
 
 .picture
   +sp()

@@ -15,7 +15,6 @@
     "aws-sdk": "^2.496.0",
     "axios": "^0.18.1",
     "dateformat": "^3.0.3",
-    "emoji-mart-vue": "^2.6.6",
     "quasar": "^1.0.0",
     "vuex-persistedstate": "^2.5.4"
   },
