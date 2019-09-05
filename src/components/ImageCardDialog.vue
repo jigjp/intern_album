@@ -1,6 +1,6 @@
 <template lang="pug">
 q-dialog(v-model="dialogOpen")
-  q-card
+  q-card(v-if="dialogOpen")
     img(:src="picture.url")
 
 </template>
